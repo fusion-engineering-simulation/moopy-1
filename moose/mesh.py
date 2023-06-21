@@ -5,6 +5,7 @@ from enum import IntEnum, auto
 class MeshObjectTypes(IntEnum):
     FileMeshGenerator = auto()
     TransformGenerator = auto()
+    FileMesh = auto()
 
 class TransformTypes(IntEnum):
     TRANSLATE = auto()
