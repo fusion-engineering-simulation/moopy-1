@@ -20,31 +20,27 @@ class TransferType(IntEnum):
     MultiAppVariableValueSamplePostprocessorTransfer = auto()
     MultiAppVariableValueSampleTransfer = auto()
     MultiAppVectorPostprocessorTransfer = auto()
+    MoabMeshTransfer = auto()
 
 class Transfer:
-    def __init__(self, name = "", source_variable = "", aux_variable = "", \
-        **kwargs):
+    def __init__(self, name="", **kwargs):
         self.name = name
         self.type = None
-        self.source_variable = source_variable
-        self.variable = aux_variable
 
-        # set the kwargs into names        
+        # Set the kwargs into attributes
         for arg in kwargs.keys():
             self.__setattr__(arg, kwargs[arg])
 
     def __str__(self):
-        string =  f'[{self.name}]\n'
+        string = f'[{self.name}]\n'
         string += f'type={self.type.name}\n'
-        string += f'source_variable={self.source_variable.name}\n'
-        string += f'variable={self.variable.name}\n'
 
-        objects = ["name", "type", "source_variable", "variable"]
-        
+        objects = ["name", "type"]
+
         for key in self.__dict__.keys():
             if key not in objects:
                 data = self.__dict__[key]
-                if isinstance(data,list):
+                if isinstance(data, list):
                     if hasattr(data[0], '__dict__'):
                         data = [x.name for x in data]
                     else:
