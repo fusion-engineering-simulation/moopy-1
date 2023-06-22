@@ -213,7 +213,7 @@ class Kernels():
     def add_kernel(self,name,type,variable,block, **kwargs):
         if name in self.kernels.keys():
             print(f'kernel name {name} already in use')
-
+        kernel = None
         if type == KernelTypes.ADHeatConduction:
             kernel = ADHeatConduction(name,variable,block, **kwargs)
         elif type == KernelTypes.ADHeatConductionTimeDerivative:
@@ -223,7 +223,7 @@ class Kernels():
         elif type == KernelTypes.ADGravity:
             kernel = ADGravity(name,variable,block, **kwargs)
    
-        #self.kernels[name] = kernel
+        self.kernels[name] = kernel
             
     def __str__(self):
         string = f'[{self.name}]\n'
@@ -240,7 +240,7 @@ class AuxKernels(Kernels):
     def add_kernel(self, name, type, variable, block, **kwargs):
         if name in self.kernels.keys():
             print(f'aux kernel name {name} already in use')
-
+        kernel = None
         if type == AuxKernelTypes.ParsedAux:
             kernel = ParsedAux(name,variable,block, **kwargs)
         elif type == AuxKernelTypes.ADRankTwoAux:
