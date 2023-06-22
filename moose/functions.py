@@ -1,12 +1,12 @@
 #!/usr/env/python3
 
 from enum import IntEnum, auto
-from moose.variables import Variable
+from variables import Variable
 
 class MooseFunctionTypes(IntEnum):
     PiecewiseLinear = auto()
     ParsedFunction = auto()
-    VariableFunction = auto
+    VariableFunction = auto()
 
 class PiecewiseFunction:
     def __init__(self, name = "", x_data = None, y_data = None):
