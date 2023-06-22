@@ -6,6 +6,7 @@ from moose.variables import Variable
 class MooseFunctionTypes(IntEnum):
     PiecewiseLinear = auto()
     ParsedFunction = auto()
+    VariableFunction = auto
 
 class PiecewiseFunction:
     def __init__(self, name = "", x_data = None, y_data = None):
@@ -64,6 +65,14 @@ class PolynomialFunction:
 class GenericFunction:
     def __init__(self, name = ""):
         self.name = name
+        
+        
+class VariableFunction:
+    def __init__(self, name = "", **kwargs):
+        self.name = name
+        self.type = MooseFunctionTypes.VariableFunction
+        if 'uoname' in kwargs.keys():
+            self.uoname = kwargs['uoname']
 
 class ParsedFunction(GenericFunction):
     def __init__(self,name = "", function = None):
