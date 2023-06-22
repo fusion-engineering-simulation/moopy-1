@@ -18,6 +18,21 @@ class MeshObject():
     def __init__(self, name = "", **kwargs):
         self.name = name
 
+class FileMesh(MeshObject):
+    def __init__(self, **kwargs):
+        self.name = kwargs.pop('name', '')
+        self.mesh_object_type = MeshObjectTypes.FileMesh
+        self.filename = kwargs.pop('filename')
+    
+    def __str__(self):
+        string = ''
+        if self.name:
+            string += f'[{self.name}]\n'
+        string += f'type={self.mesh_object_type.name}\n'
+        string += f'file={self.filename}\n'
+        string += '[]\n'
+        return string
+        
 class FileMeshGenerator(MeshObject):
     def __init__(self, name="", **kwargs):
         super().__init__(name, **kwargs)
@@ -101,6 +116,8 @@ class Mesh():
             mesh = FileMeshGenerator(name=name, **kwargs)
         elif type == MeshObjectTypes.TransformGenerator:
             mesh = TransformGenerator(name=name, **kwargs)
+        elif type == MeshObjectTypes.FileMesh: 
+            mesh = FileMesh(name=name, **kwargs)
         
         if mesh is not None:
             self.mesh_objects[name] = mesh
