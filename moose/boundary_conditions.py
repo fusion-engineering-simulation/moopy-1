@@ -14,6 +14,21 @@ class BoundaryCondition:
         self.name = name
         self.variable = variable
         self.boundary = boundary
+        
+class DirichletBC(BoundaryCondition):
+    def __init__(self, name = "", variable = None, boundary = "", **kwargs):
+        super().__init__(name,variable,boundary)
+        self.bc_type = BoundaryConditionTypes.DirichletBC
+        self.value = kwargs.pop("value")
+
+    def __str__(self):
+        string =  f'[{self.name}]\n'
+        string += f'type={self.bc_type.name}\n'
+        string += f'variable={self.variable.name}\n'
+        string += f'boundary="{self.boundary}"\n'
+        string += f'value={self.value}\n'
+        string += f'[]\n'
+        return string
 
 class ADDirichletBC(BoundaryCondition):
     def __init__(self, name = "", variable = None, boundary = "", **kwargs):
@@ -85,6 +100,9 @@ class BoundaryConditions:
             print(f'BC name {name} already in use')
         if type == BoundaryConditionTypes.ADDirichletBC:
             bc = ADDirichletBC(name,variable,boundary,**kwargs)
+            self.boundary_conditions[name] = bc
+        elif type == BoundaryConditionTypes.DirichletBC:
+            bc = DirichletBC(name,variable,boundary,**kwargs)
             self.boundary_conditions[name] = bc
         elif type == BoundaryConditionTypes.ADNeumannBC:
             bc = ADNeumannBC(name,variable,boundary,**kwargs)
