@@ -7,11 +7,8 @@ class Outputs():
     
     def __str__(self):
         string =  f'[{self.name}]\n'
-        for key in self.outputs.keys():
-            if key == "exodus":
-                string += 'exodus=true\n'
-            if key == "csv":
-                string += 'csv=true\n'
+        for key, value in self.outputs.items():
+            string += f'{key}={value}\n'
     
         string += '[]\n'
         return string
