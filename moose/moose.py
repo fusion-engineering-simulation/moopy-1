@@ -39,7 +39,9 @@ class MOOSEInput():
         self.transfers = None
         self.problem = None
         self.executioner = None
+        self.user_objects = None
         self.outputs = None
+        self.user_objects = None
 
     def write(self, filename):
         file = open(filename,'w')
@@ -61,6 +63,7 @@ class MOOSEInput():
         if self.transfers: file.write(indent(self.transfers.__str__()))
         if self.post_processors: file.write(indent(self.post_processors.__str__()))
         if self.executioner: file.write(indent(self.executioner.__str__()))
+        if self.user_objects: file.write(indent(self.user_objects.__str__()))
         if self.outputs: file.write(indent(self.outputs.__str__()))
 
         file.close()
