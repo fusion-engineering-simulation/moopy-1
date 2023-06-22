@@ -4,6 +4,7 @@ from enum import IntEnum, auto
 
 class BoundaryConditionTypes(IntEnum):
     ADDirichletBC  = auto()
+    DirichletBC = auto()
     ADNeumannBC = auto()
     ADConvectiveHeatFluxBC = auto()
     Pressure = auto()
