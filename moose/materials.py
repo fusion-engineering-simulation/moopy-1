@@ -166,22 +166,30 @@ class ADGenericFunctionMaterial(Material):
         return string
         
 class ADGenericConstantMaterial(Material):
-    def __init__(self, name = "", block = "", **kwargs):
-        super().__init__(name,block)
+    def __init__(self, name="", block="", **kwargs):
+        super().__init__(name, block)
         self.material_type = MaterialTypes.ADGenericConstantMaterial
         self.prop_names = kwargs.pop('prop_names')
         self.prop_values = kwargs.pop('prop_values')
-    
+
+        # Store any additional keyword arguments
+        self.additional_properties = kwargs
+
     def __str__(self):
-        string =  f'[{self.name}]\n'
-        string += f'type={self.material_type.name}\n'
+        string = f"[{self.name}]\n"
+        string += f"type={self.material_type.name}\n"
         prop_names = ' '.join(self.prop_names)
-        string += f'prop_names=\'{prop_names}\'\n'
-        prop_values = ' '.join([x for x in self.prop_values])
-        string += f'prop_values=\'{prop_values}\'\n'
+        string += f"prop_names='{prop_names}'\n"
+        prop_values = ' '.join([str(x) for x in self.prop_values])
+        string += f"prop_values='{prop_values}'\n"
         if self.block:
-            string += f'block="{self.block}"\n'
-        string += '[]\n'
+            string += f"block=\"{self.block}\"\n"
+
+        # Include the string representation of additional properties
+        for key, value in self.additional_properties.items():
+            string += f"{key}={value}\n"
+
+        string += "[]\n"
         return string
 
 
