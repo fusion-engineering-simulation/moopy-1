@@ -26,6 +26,7 @@ class AuxKernelTypes(IntEnum):
     ParsedAux = auto()
     ADRankTwoAux = auto()
     ADRankTwoScalarAux = auto()
+    ADMatHeatSource = auto()
     
 
 class KernelTypes(IntEnum):
@@ -63,8 +64,29 @@ class ADHeatConduction(Kernel):
         if self.thermal_conductivity:
             string += f'thermal_conductivity={self.thermal_conductivity}\n'
         string += "[]\n"
-        return string       
+        return string
+        
+class ADMatHeatSource(Kernel):
+    def __init__(self, name="", variable=None, block=None, **kwargs):
+        super().__init__(name, variable, block, **kwargs)
+        self.kernel_type = KernelTypes.ADMatHeatSource
 
+        if "material_property" in kwargs.keys():
+            self.material_property = kwargs.pop("material_property")
+        else:
+            self.material_property = None
+    def __str__(self):
+        string = f"[{self.name}]\n"
+        string += f"type={self.kernel_type.name}\n"
+        string += f"variable={self.variable.name}\n"
+        # write the block if provided
+        if self.block is not None:
+            string += f"block={self.block}\n"
+        if self.material_property:
+            string += f"material_property={self.material_property}\n"
+        string += "[]\n"
+        return string
+        
 class ADHeatConductionTimeDerivative(Kernel):
     def __init__(self, name = "", variable = None, block = None,
             **kwargs):
@@ -222,9 +244,11 @@ class Kernels():
             kernel = TensorMechanics(name,variable,block, **kwargs)
         elif type == KernelTypes.ADGravity:
             kernel = ADGravity(name,variable,block, **kwargs)
+        elif type == KernelTypes.ADMatHeatSource:
+            kernel = ADMatHeatSource(name,variable,block, **kwargs)
    
         self.kernels[name] = kernel
-            
+    
     def __str__(self):
         string = f'[{self.name}]\n'
         for kernel in self.kernels.keys():
