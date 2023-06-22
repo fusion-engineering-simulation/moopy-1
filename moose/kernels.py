@@ -26,12 +26,14 @@ class AuxKernelTypes(IntEnum):
     ParsedAux = auto()
     ADRankTwoAux = auto()
     ADRankTwoScalarAux = auto()
+    
 
 class KernelTypes(IntEnum):
     ADHeatConduction  = auto()
     ADHeatConductionTimeDerivative = auto()
     TensorMechanics = auto()
     ADGravity = auto()
+    ADMatHeatSource = auto()
     
 class Kernel():
     def __init__(self, name = "", variable = None, block = None,
@@ -221,7 +223,7 @@ class Kernels():
         elif type == KernelTypes.ADGravity:
             kernel = ADGravity(name,variable,block, **kwargs)
    
-        self.kernels[name] = kernel
+        #self.kernels[name] = kernel
             
     def __str__(self):
         string = f'[{self.name}]\n'
