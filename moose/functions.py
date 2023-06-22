@@ -73,6 +73,13 @@ class VariableFunction:
         self.type = MooseFunctionTypes.VariableFunction
         if 'uoname' in kwargs.keys():
             self.uoname = kwargs['uoname']
+    def __str__(self):
+        string = f'[{self.name}]\n'
+        string += f'type={self.type.name}\n'
+        string += f'uoname="{self.uoname}"\n'
+        string += '[]\n'
+        return string
+
 
 class ParsedFunction(GenericFunction):
     def __init__(self,name = "", function = None):
@@ -115,5 +122,3 @@ class Functions:
             string += self.functions[func].__str__()
         string += "[]\n"
         return string
-
-    
