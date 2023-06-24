@@ -30,7 +30,6 @@ class FileMesh(MeshObject):
             string += f'[{self.name}]\n'
         string += f'type={self.mesh_object_type.name}\n'
         string += f'file={self.filename}\n'
-        string += '[]\n'
         return string
         
 class FileMeshGenerator(MeshObject):
