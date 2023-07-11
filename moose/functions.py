@@ -7,6 +7,7 @@ class MooseFunctionTypes(IntEnum):
     PiecewiseLinear = auto()
     ParsedFunction = auto()
     VariableFunction = auto()
+    PiecewiseMultilinear = auto()
 
 class PiecewiseFunction:
     def __init__(self, name = "", x_data = None, y_data = None):
@@ -110,6 +111,20 @@ class PiecewiseLinear(GenericFunction):
         string += '[]\n'
         
         return string
+
+class PiecewiseMultilinear(GenericFunction):
+    def __init__(self,name = "", data_file = ""):
+        super().__init__(name)
+        self.type = MooseFunctionTypes.PiecewiseMultilinear
+        self.data_file = data_file
+        
+    def __str__(self):
+        string = f'[{self.name}]\n'
+        string += f'type={ self.type.name}\n'
+        string += f'data_file="{ self.data_file}"\n'
+        string += '[]\n'
+        return string
+        
 
 class Functions:
     def __init__(self):
